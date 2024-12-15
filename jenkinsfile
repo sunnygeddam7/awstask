@@ -12,10 +12,10 @@ pipeline {
                 cleanWs()
             }
         }
-        
+
         stage('Checkout from GitHub') {
             steps {
-                git branch: 'master', url: 'https://github.com/sunnygeddam7/awstask.git'
+                git branch: 'main', url: 'https://github.com/sunnygeddam7/awstask.git'
             }
         }
 
