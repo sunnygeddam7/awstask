@@ -26,15 +26,7 @@ pipeline {
             }
         }
 
-        stage('Docker Build and Push') {
-            environment {
-                DOCKER_IMAGE = 'itssunnyy/tomcat:latest'
-                DOCKER_CREDENTIALS = 'docker_creds'
 
-            }
-
-            
-        }
         stage('terraform') {
             steps {
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -48,7 +40,7 @@ pipeline {
             steps {
                 sshagent(['target_key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@3.106.231.253 << 'EOF'
+                    ssh -o StrictHostKeyChecking=no ubuntu@$EC2_IP << 'EOF'
                     docker --version
                     hostname -I
                     sudo docker pull itssunnyy/tomcat:latest
