@@ -39,4 +39,35 @@ resource "aws_instance" "my_ec2" {
   tags = {
     Name = "MyFirstEC2"  
   }
+
+  user_data = <<-EOF
+  #!/bin/bash
+  # Update the package list and install prerequisites
+  sudo apt-get update -y
+  sudo apt-get install -y ca-certificates curl
+
+  # Create the keyrings directory
+  sudo install -m 0755 -d /etc/apt/keyrings
+
+  # Add Docker's official GPG key
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+  # Add Docker repository to sources
+  echo "deb [arch=\$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \$(. /etc/os-release && echo \"\$VERSION_CODENAME\") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+  # Update package list and install Docker
+  sudo apt-get update -y
+  sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+  # Enable and start Docker service
+  sudo systemctl enable docker
+  sudo systemctl start docker
+
+  # Add 'ubuntu' user to the docker group
+  sudo usermod -aG docker ubuntu
+
+  # Output Docker version
+  docker --version
+EOF
 }
