@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         maven 'maven'
+        terraform 'terraform'
     }
 
 
@@ -24,7 +25,7 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        
+
         stage('Docker Build and Push') {
             environment {
                 DOCKER_IMAGE = 'itssunnyy/tomcat:latest'
