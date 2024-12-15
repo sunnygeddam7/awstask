@@ -38,7 +38,7 @@ pipeline {
                 sh 'docker build -t $DOCKER_IMAGE .'
                 withCredentials([usernameColonPassword(credentialsId: 'docker_creds', variable: 'docker_creds')]) {
                     sh '''
-                    docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" docker.io
+                    
                     docker push $DOCKER_IMAGE
                     '''
                 }
