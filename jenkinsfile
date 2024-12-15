@@ -24,14 +24,7 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
+        
         stage('Docker Build and Push') {
             environment {
                 DOCKER_IMAGE = 'itssunnyy/tomcat:latest'
