@@ -51,7 +51,7 @@ pipeline {
             }
             
         }
-        stage('terraformm') {
+        stage('terraform') {
             steps {
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh 'terraform init'
@@ -62,7 +62,7 @@ pipeline {
         }
         stage('app_deploy') {
             steps {
-                sshagent(['targwt_key']) {
+                sshagent(['target_key']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@3.106.231.253 << 'EOF'
                     docker --version
