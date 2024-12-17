@@ -3,7 +3,6 @@ provider "aws" {
 }
 
 resource "aws_security_group" "ec2_security_group" {
-  name        = "ec2_security_group"
   description = "Allow SSH and HTTP traffic"
 
   ingress {

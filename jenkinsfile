@@ -32,7 +32,7 @@ pipeline {
                 withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh 'terraform init'
                     sh 'terraform apply -auto-approve'
-                    sh 'env.EC2_IP = sh(script: "terraform output -raw public_ip", returnStdout: true).trim()'
+                    sh 'env.EC2_IP = sh (script: "terraform output -raw public_ip", returnStdout: true).trim()'
                 }
             }
         }
@@ -42,7 +42,6 @@ pipeline {
                     sh """
                     ssh -o StrictHostKeyChecking=no ubuntu@$EC2_IP << 'EOF'
                     docker --version
-                    hostname -I
                     sudo docker pull itssunnyy/tomcat:latest
                     sudo docker run -d itssunnyy/tomcat:latest
                     """
