@@ -37,7 +37,6 @@ resource "aws_instance" "my_ec2" {
   tags = {
     Name = "MyFirstEC2"  
   }
-  user_data = file("docker_install.sh")
 }
 
 output "public_ip" {
