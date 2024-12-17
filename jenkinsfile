@@ -33,8 +33,6 @@ pipeline {
                     script {
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
-                        env.EC2_IP = sh(script: "terraform output -raw public_ip", returnStdout: true).trim()
-                        echo "EC2 Public IP: ${env.EC2_IP}"
                     }
                 }
             }
